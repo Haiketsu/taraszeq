@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Losowanie obrazka</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif; /* Zmiana czcionki na Arial lub domyślną czcionkę bezszeryfową */
+        position: relative; /* Dodaj pozycję względną do body, aby móc umieścić union.png */
+    }
+
+    #mainContainer {
+        text-align: center;
+    }
+
+    #obrazekContainer {
+        margin-bottom: 10px; /* Odstęp między obrazkiem a przyciskiem */
+        display: inline-block; /* Ustawienie na blokowy, aby móc zastosować tekstowe wyrównanie */
+        text-align: left; /* Wyrównanie tekstu do lewej */
+    }
+
+    #wylosowanyObrazek {
+        max-width: 300px;
+        max-height: 300px;
+        margin-bottom: 10px;
+        cursor: pointer; /* Kursor zmienia się na wskaźnik, aby wskazać, że obrazek jest klikalny */
+    }
+
+    #opisObrazka {
+        font-size: 16px; /* Rozmiar czcionki */
+        font-weight: bold; /* Grubość czcionki */
+        color: #333; /* Kolor tekstu */
+    }
+
+    #losowanieBtn {
+        display: none; /* Ukryj przycisk początkowo */
+        max-width: 300px;
+        max-height: 300px;
+    }
+
+    .expandButton {
+        position: absolute; /* Ustaw pozycję na absolutną */
+        bottom: 10px; /* Odległość od dolnej krawędzi */
+        cursor: pointer; /* Kursor zmienia się na wskaźnik, aby wskazać, że przycisk jest klikalny */
+    }
+
+    .expandButton img {
+        width: 50px; /* Szerokość przycisku */
+        height: 50px; /* Wysokość przycisku */
+        margin-right: 10px; /* Margines od prawej krawędzi */
+    }
+
+    #expandedImage {
+        display: none; /* Ukryj obrazek ukryty początkowo */
+        position: fixed; /* Ustaw pozycję na stałą, aby obrazek ukryty zawsze był wyśrodkowany na stronie */
+        top: 0; /* Ustawienie na górze okna przeglądarki */
+        left: 0; /* Ustawienie na lewo okna przeglądarki */
+        width: 100%; /* Szerokość na całe okno przeglądarki */
+        height: 100%; /* Wysokość na całe okno przeglądarki */
+        background-color: rgba(0, 0, 0, 0.7); /* Przezroczyste tło */
+        z-index: 9999; /* Ustawienie z-index, aby był na wierzchu */
+        text-align: center; /* Wyrównanie tekstu do środka */
+    }
+
+    #expandedImage img {
+        max-width: 90%; /* Maksymalna szerokość obrazka */
+        max-height: 90%; /* Maksymalna wysokość obrazka */
+        margin-top: 5%; /* Margines od góry */
+    }
+
+    #alternateTaraszeqText {
+        position: absolute; /* Ustaw pozycję na absolutną */
+        top: 10px; /* Odległość od górnej krawędzi */
+        left: 50%; /* Ustawienie po środku */
+        transform: translateX(-50%); /* Przesunięcie w lewo o połowę szerokości */
+        font-size: 20px; /* Rozmiar czcionki */
+        font-weight: bold; /* Grubość czcionki */
+        color: white; /* Kolor tekstu */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Cień tekstu */
+    }
+</style>
+</head>
+<body>
+
+<div id="mainContainer">
+    <h2>Codzienny Taraszeq <br /> Już dziś u ciebie w domu!!</h2>
+
+    <div id="obrazekContainer">
+        <img id="wylosowanyObrazek" src="surrender.png" alt="" onclick="losujObrazek()">
+        <p id="opisObrazka"></p>
+    </div>
+    <div id="losowanieBtnContainer">
+        <img id="losowanieBtn" src="surrender.png" alt="Losuj kolejny obrazek" onclick="losujObrazek()">
+    </div>
+</div>
+
+<div class="expandButton" style="right: 70px;" onclick="toggleExpandedImage('ukryty.png', 'Alternatywny Taraszeq #1: Czerwona Droga')">
+    <img src="union.png" alt="Union">
+</div>
+
+<div class="expandButton" style="right: 130px;" onclick="toggleExpandedImage('Wiedzmin.png', 'Alternatywny Taraszeq #2: Droga Wilka')">
+    <img src="wilk.png" alt="Wilk">
+</div>
+
+<div id="expandedImage" onclick="toggleExpandedImage()">
+    <p id="alternateTaraszeqText">Alternatywny Taraszeq #2: Droga Wilka</p>
+    <img src="ukryty.png" alt="Ukryty obrazek">
+</div>
+
+<script>
+function losujObrazek() {
+    var obrazki = [
+        { sciezka: "Paryz.png", opis: "Taraszeq w dniu 23 czerwca 1940 roku" },
+        { sciezka: "zemdlal.png", opis: "Taraszeq wyzionął ducha" },
+        { sciezka: "zjarany.png", opis: "Taraszeq nawdychał się oparów" },
+        { sciezka: "sigma.png", opis: "Taraszeq Sigma" },
+        { sciezka: "szok.png", opis: "Taraszeq widzi  grzyba w Hiroshimie" },
+        { sciezka: "Happy Taraszeq.png", opis: "Taraszeq Good Ending" },
+        { sciezka: "Jogurcik.png", opis: "Taraszeq ale dobry Jogurcik" },
+        { sciezka: "Strach.png", opis: "Taraszeq widzi demony przeszłosci" },
+        { sciezka: "Trup.png", opis: "Taraszeq Bad Ending" },
+        { sciezka: "Brat.png", opis: "Taraszeq wśród braci" },
+        { sciezka: "Zeby.png", opis: "Taraszeq dwu zębny bandyta" },
+        { sciezka: "reakcja.png", opis: "Taraszeq reaguj mocniej" },
+        { sciezka: "crazy.png", opis: "Taraszeq oszalał" },
+        { sciezka: "Głęboki.png", opis: "Taraszeq gardło głębokie" },
+        { sciezka: "skała.png", opis: "Taraszeq nałykał się ashwagandhy" },
+        { sciezka: "Wakacje.png", opis: "Taraszeq majóweczka" }
+    ]; // tutaj możesz dodać ścieżki do swoich obrazków
+    
+    var losowyIndex = Math.floor(Math.random() * obrazki.length);
+    var wylosowanyObrazek = obrazki[losowyIndex];
+    
+    document.getElementById("wylosowanyObrazek").src = wylosowanyObrazek.sciezka;
+    document.getElementById("opisObrazka").innerText = wylosowanyObrazek.opis;
+    
+    // Pokaż przycisk po wylosowaniu obrazka
+    document.getElementById("losowanieBtn").style.display = "block";
+}
+
+function toggleExpandedImage(imageSrc, alternateText) {
+    var expandedImage = document.getElementById("expandedImage");
+    var alternateTextElement = document.getElementById("alternateTaraszeqText");
+    
+    if (expandedImage.style.display === "block") {
+        expandedImage.style.display = "none";
+    } else {
+        expandedImage.style.display = "block";
+        expandedImage.querySelector("img").src = imageSrc;
+        alternateTextElement.innerText = alternateText;
+    }
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
